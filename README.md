@@ -5,7 +5,7 @@ Good if you need a stable sort, since Carp uses unstable sort by default.
 
 ## Usage
 ```clojure
-(load "https://github.com/GrayJack/Mergesort-carp@master")
+(load "git@github.com:GrayJack/Mergesort-carp@master")
 
 (def arr [0 3 4 5 6 1 4 3 5 8])
 (defn-do main []

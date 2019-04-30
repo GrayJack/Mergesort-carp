@@ -1,0 +1,81 @@
+(use Array)
+
+(defmacro while-do [condition :rest forms]
+    (list 'while condition
+        (cons 'do forms)))
+
+(defmodule MergeSort
+    (hidden ord)
+    (defn ord [a b]
+        (< a b))
+
+    (doc combine! "Combines 2 arrays (left and right) into a `arr`.")
+    (defn combine!
+        [arr left right by]
+        (let-do [
+            llen (length &left)
+            rlen (length &right)
+            i 0 j 0 k 0]
+            (while-do (and (< i llen) (< j rlen))
+                (if (~by (nth &left i) (nth &right j))
+                    (do
+                        (aset! arr, k, @(nth &left i))
+                        (set! i (+ i 1)))
+                    (do
+                        (aset! arr, k, @(nth &right j))
+                        (set! j (+ j 1))))
+                (set! k (+ k 1)))
+            (while-do (< i llen)
+                (aset! arr, k, @(nth &left i))
+                (set! i (+ i 1))
+                (set! k (+ k 1)))
+            (while-do (< j rlen)
+                (aset! arr, k, @(nth &right j))
+                (set! j (+ j 1))
+                (set! k (+ k 1)))))
+
+    (doc merge! "Mergesort main function.")
+    (defn merge!
+        [arr by]
+        (let [end (Array.length arr)]
+            (when (> end 1)
+                (let-do [
+                    mid (/ end 2)
+                    l (subarray arr 0 mid)
+                    r (subarray arr mid end)]
+                    (merge! &l by)
+                    (merge! &r by)
+                    (combine! arr l r by)))))
+
+    (doc sort! "Perform an in-place mergesort of a given array.")
+    (defn sort!
+        [arr]
+        (merge! arr &ord))
+
+    (doc sort-by! "Perform an in-place mergesort of a given array with a comparison function.")
+    (defn sort-by!
+        [arr f]
+        (merge! arr f))
+
+    (doc sorted-by "Perform a mergesort in a new copy of given array with comparison function.")
+    (defn sorted-by [arr f]
+        (let-do [narr (Array.copy arr)]
+                (sort-by! &narr f)
+                narr))
+
+    (doc sorted "Perform a mergesort in a new copy of given array.")
+    (defn sorted [arr]
+        (sorted-by arr &ord))
+
+    (doc sort-by "Perform an in-place heapsort of a given owned array with comparison function.")
+    (defn sort-by
+        [arr f]
+        (do
+            (sort-by! &arr f)
+            arr))
+
+    (doc sort "Perform an in-place mergesort of a given owned array.")
+    (defn sort
+        [arr]
+        (sort-by arr &ord))
+)

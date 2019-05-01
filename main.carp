@@ -1,9 +1,5 @@
 (use Array)
 
-(defmacro while-do [condition :rest forms]
-    (list 'while condition
-        (cons 'do forms)))
-
 (defmodule MergeSort
     (hidden ord)
     (defn ord [a b]

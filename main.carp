@@ -1,5 +1,3 @@
-(use Array)
-
 (defmodule MergeSort
     (hidden ord)
     (defn ord [a b]
@@ -9,24 +7,24 @@
     (defn combine!
         [arr left right by]
         (let-do [
-            llen (length &left)
-            rlen (length &right)
+            llen (Array.length &left)
+            rlen (Array.length &right)
             i 0 j 0 k 0]
             (while-do (and (< i llen) (< j rlen))
-                (if (~by (nth &left i) (nth &right j))
+                (if (~by (Array.nth &left i) (Array.nth &right j))
                     (do
-                        (aset! arr, k, @(nth &left i))
+                        (Array.aset! arr, k, @(Array.nth &left i))
                         (set! i (+ i 1)))
                     (do
-                        (aset! arr, k, @(nth &right j))
+                        (Array.aset! arr, k, @(Array.nth &right j))
                         (set! j (+ j 1))))
                 (set! k (+ k 1)))
             (while-do (< i llen)
-                (aset! arr, k, @(nth &left i))
+                (Array.aset! arr, k, @(Array.nth &left i))
                 (set! i (+ i 1))
                 (set! k (+ k 1)))
             (while-do (< j rlen)
-                (aset! arr, k, @(nth &right j))
+                (Array.aset! arr, k, @(Array.nth &right j))
                 (set! j (+ j 1))
                 (set! k (+ k 1)))))
 
@@ -37,8 +35,8 @@
             (when (> end 1)
                 (let-do [
                     mid (/ end 2)
-                    l (subarray arr 0 mid)
-                    r (subarray arr mid end)]
+                    l (Array.subarray arr 0 mid)
+                    r (Array.subarray arr mid end)]
                     (merge! &l by)
                     (merge! &r by)
                     (combine! arr l r by)))))
@@ -56,8 +54,8 @@
     (doc sorted-by "Perform a mergesort in a new copy of given array with comparison function.")
     (defn sorted-by [arr f]
         (let-do [narr (Array.copy arr)]
-                (sort-by! &narr f)
-                narr))
+          (sort-by! &narr f)
+          narr))
 
     (doc sorted "Perform a mergesort in a new copy of given array.")
     (defn sorted [arr]
@@ -67,8 +65,8 @@
     (defn sort-by
         [arr f]
         (do
-            (sort-by! &arr f)
-            arr))
+          (sort-by! &arr f)
+          arr))
 
     (doc sort "Perform an in-place mergesort of a given owned array.")
     (defn sort

@@ -13,18 +13,18 @@
             (while-do (and (< i llen) (< j rlen))
                 (if (~by (Array.nth &left i) (Array.nth &right j))
                     (do
-                        (Array.aset! arr, k, @(Array.nth &left i))
+                        (Array.aset! arr, k, @(Array.unsafe-nth &left i))
                         (set! i (+ i 1)))
                     (do
-                        (Array.aset! arr, k, @(Array.nth &right j))
+                        (Array.aset! arr, k, @(Array.unsafe-nth &right j))
                         (set! j (+ j 1))))
                 (set! k (+ k 1)))
             (while-do (< i llen)
-                (Array.aset! arr, k, @(Array.nth &left i))
+                (Array.aset! arr, k, @(Array.unsafe-nth &left i))
                 (set! i (+ i 1))
                 (set! k (+ k 1)))
             (while-do (< j rlen)
-                (Array.aset! arr, k, @(Array.nth &right j))
+                (Array.aset! arr, k, @(Array.unsafe-nth &right j))
                 (set! j (+ j 1))
                 (set! k (+ k 1)))))
 

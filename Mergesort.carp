@@ -11,7 +11,7 @@
             rlen (Array.length &right)
             i 0 j 0 k 0]
             (while-do (and (< i llen) (< j rlen))
-                (if (~by (Array.nth &left i) (Array.nth &right j))
+                (if (~by (Array.unsafe-nth &left i) (Array.unsafe-nth &right j))
                     (do
                         (Array.aset! arr, k, @(Array.unsafe-nth &left i))
                         (set! i (+ i 1)))
@@ -61,7 +61,7 @@
     (defn sorted [arr]
         (sorted-by arr &ord))
 
-    (doc sort-by "Perform an in-place heapsort of a given owned array with comparison function.")
+    (doc sort-by "Perform an in-place mergesort given owned array with comparison function.")
     (defn sort-by
         [arr f]
         (do
